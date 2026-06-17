@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+    
+    <!-- Custom Configuration for Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            light: '#fbbf24', // Amber 400
+                            DEFAULT: '#f59e0b', // Amber 500
+                            dark: '#d97706', // Amber 600
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles for things Tailwind can't easily do inline */
+        body {
+            background-color: #0f172a; /* Slate 900 */
+            color: #f8fafc; /* Slate 50 */
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        /* Typing cursor animation */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s step-start infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(to right, #8b5cf6, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Scroll Reveal Utility */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Glow effect for profile picture */
+        .profile-glow {
+            box-shadow: 0 0 40px -10px rgba(139, 92, 246, 0.5);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-light selection:text-white relative">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="absolute inset-0 bg-slate-900/90 backdrop-blur-md border-b border-slate-800"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0">
+                    <a href="#home" class="font-heading font-bold text-2xl tracking-tighter">
+                        <span class="text-white">Sudhanshu</span><span class="text-brand-DEFAULT">.</span>
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="text-gray-300 hover:text-white transition-colors px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="#about" class="text-gray-300 hover:text-white transition-colors px-3 py-2 rounded-md text-sm font-medium">Profile</a>
+                        <a href="#experience" class="text-gray-300 hover:text-white transition-colors px-3 py-2 rounded-md text-sm font-medium">Career</a>
+                        <a href="#family" class="text-gray-300 hover:text-white transition-colors px-3 py-2 rounded-md text-sm font-medium">Family</a>
+                        <a href="#expectations" class="text-gray-300 hover:text-white transition-colors px-3 py-2 rounded-md text-sm font-medium">Expectations</a>
+                        <a href="#contact" class="bg-brand-DEFAULT hover:bg-brand-dark text-white px-5 py-2 rounded-full text-sm font-medium transition-colors text-slate-900">Contact</a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" id="mobile-menu-btn" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-slate-800 focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-slate-900 border-b border-slate-800 absolute w-full" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#about" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Profile</a>
+                <a href="#experience" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Career</a>
+                <a href="#family" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Family</a>
+                <a href="#expectations" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Expectations</a>
+                <a href="#contact" class="text-brand-light hover:text-brand-DEFAULT block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center pt-20 relative overflow-hidden">
+        <!-- Background decorative elements -->
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-light/10 rounded-full mix-blend-screen filter blur-3xl opacity-50 animate-blob"></div>
+        <div class="absolute top-1/3 right-1/4 w-96 h-96 bg-orange-500/10 rounded-full mix-blend-screen filter blur-3xl opacity-50 animate-blob animation-delay-2000"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="flex flex-col-reverse lg:flex-row items-center justify-between gap-12">
+                
+                <!-- Text Content -->
+                <div class="flex-1 text-center lg:text-left reveal">
+                    <p class="text-brand-light font-medium tracking-wide mb-2 uppercase text-sm">Welcome to my profile</p>
+                    <h1 class="font-heading text-5xl sm:text-6xl lg:text-7xl font-bold mb-4 leading-tight">
+                        <span class="text-white">Sudhanshu Kumar</span> <span class="text-brand-DEFAULT">Rao</span>
+                    </h1>
+                    <h2 class="text-2xl sm:text-3xl text-gray-400 font-medium mb-6 h-10">
+                        <span id="typewriter" class="text-white typing-cursor"></span>
+                    </h2>
+                    <p class="text-gray-400 text-lg mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                        Traditional and deeply family-centric. A continuous learner operating with strong financial prudence, seeking a strictly traditional lifelong marriage.
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <a href="#about" class="w-full sm:w-auto px-8 py-3 rounded-full bg-brand-DEFAULT hover:bg-brand-dark text-slate-900 font-bold transition-all transform hover:-translate-y-1 shadow-lg shadow-brand-DEFAULT/30 text-center">
+                            View Bio-Data
+                        </a>
+                        <a href="#contact" class="w-full sm:w-auto px-8 py-3 rounded-full bg-transparent border border-gray-600 hover:border-brand-DEFAULT text-white font-medium transition-all hover:bg-slate-800 text-center">
+                            Contact Family
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Profile Image -->
+                <div class="flex-1 flex justify-center reveal">
+                    <div class="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
+                        <!-- Add your actual image URL below -->
+                        <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?fit=crop&w=800&q=80" alt="Sudhanshu Kumar Rao" class="rounded-2xl w-full h-full object-cover border-4 border-slate-800 profile-glow z-10 relative object-top">
+                        <!-- Decorative border ring -->
+                        <div class="absolute inset-0 rounded-2xl border-2 border-brand-DEFAULT/50 scale-105 -z-10 transform rotate-3"></div>
+                        <div class="absolute inset-0 rounded-2xl border-2 border-orange-500/30 scale-110 -z-10 transform -rotate-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce hidden md:block">
+            <a href="#about" class="text-brand-DEFAULT hover:text-white transition-colors">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-heading text-3xl md:text-4xl font-bold mb-4">Personal <span class="text-brand-DEFAULT">Details</span></h2>
+                <div class="w-20 h-1 bg-brand-DEFAULT mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                <div class="reveal">
+                    <h3 class="text-2xl font-heading font-semibold mb-4 text-white">About Me & Values</h3>
+                    <p class="text-gray-300 mb-4 leading-relaxed text-lg">
+                        I am a <span class="text-brand-light font-medium">traditional and deeply family-centric</span> individual, maintaining a simple, low-key, and private lifestyle. I consider myself a continuous learner with a creative mindset. I operate with strong financial prudence and enjoy good food.
+                    </p>
+                    <p class="text-gray-400 mb-6 leading-relaxed">
+                        In my personal life, I value traits like modesty, humility, honesty, and trustworthiness. I strive to be compassionate, empathetic, and responsible. My hobbies include exploring AI/ML, stock investments, and pencil drawing.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-4 mt-8">
+                        <div class="p-4 bg-slate-900 rounded-xl border border-slate-700 border-l-4 border-l-brand-DEFAULT">
+                            <h4 class="text-gray-400 text-sm mb-1 uppercase tracking-wider">Date of Birth</h4>
+                            <p class="text-white font-medium text-lg">May 2nd, 1995</p>
+                            <p class="text-xs text-gray-500 mt-1">20:32 PM</p>
+                        </div>
+                        <div class="p-4 bg-slate-900 rounded-xl border border-slate-700 border-l-4 border-l-brand-DEFAULT">
+                            <h4 class="text-gray-400 text-sm mb-1 uppercase tracking-wider">Birth Place</h4>
+                            <p class="text-white font-medium text-lg">Bokaro Steel City</p>
+                            <p class="text-xs text-gray-500 mt-1">Jharkhand</p>
+                        </div>
+                        <div class="p-4 bg-slate-900 rounded-xl border border-slate-700 border-l-4 border-l-brand-DEFAULT">
+                            <h4 class="text-gray-400 text-sm mb-1 uppercase tracking-wider">Height & Weight</h4>
+                            <p class="text-white font-medium text-lg">5'8" • 73 Kg</p>
+                            <p class="text-xs text-gray-500 mt-1">Healthy & Fit</p>
+                        </div>
+                        <div class="p-4 bg-slate-900 rounded-xl border border-slate-700 border-l-4 border-l-brand-DEFAULT">
+                            <h4 class="text-gray-400 text-sm mb-1 uppercase tracking-wider">Blood Group</h4>
+                            <p class="text-white font-medium text-lg">O Positive</p>
+                            <p class="text-xs text-gray-500 mt-1">Complexion: Brown</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cultural Details -->
+                <div class="reveal">
+                    <h3 class="text-2xl font-heading font-semibold mb-6 text-white">Cultural & Background</h3>
+                    <div class="bg-slate-900 rounded-2xl p-8 border border-slate-700 shadow-xl">
+                        <ul class="space-y-4">
+                            <li class="flex items-center justify-between border-b border-slate-800 pb-3">
+                                <span class="text-gray-400"><i class="fas fa-om text-brand-DEFAULT mr-3 w-5 text-center"></i>Religion</span>
+                                <span class="text-white font-medium">Hindu</span>
+                            </li>
+                            <li class="flex items-center justify-between border-b border-slate-800 pb-3">
+                                <span class="text-gray-400"><i class="fas fa-users text-brand-DEFAULT mr-3 w-5 text-center"></i>Caste</span>
+                                <span class="text-white font-medium">Chamar</span>
+                            </li>
+                            <li class="flex items-center justify-between border-b border-slate-800 pb-3">
+                                <span class="text-gray-400"><i class="fas fa-leaf text-brand-DEFAULT mr-3 w-5 text-center"></i>Gotra</span>
+                                <span class="text-white font-medium">Kashyap</span>
+                            </li>
+                            <li class="flex items-center justify-between border-b border-slate-800 pb-3">
+                                <span class="text-gray-400"><i class="fas fa-moon text-brand-DEFAULT mr-3 w-5 text-center"></i>Rashi</span>
+                                <span class="text-white font-medium">Kumbh</span>
+                            </li>
+                            <li class="flex items-center justify-between border-b border-slate-800 pb-3">
+                                <span class="text-gray-400"><i class="fas fa-language text-brand-DEFAULT mr-3 w-5 text-center"></i>Languages</span>
+                                <span class="text-white font-medium text-right">Hindi, English, Bhojpuri</span>
+                            </li>
+                            <li class="flex items-center justify-between border-b border-slate-800 pb-3">
+                                <span class="text-gray-400"><i class="fas fa-ring text-brand-DEFAULT mr-3 w-5 text-center"></i>Marital Status</span>
+                                <span class="text-brand-light font-bold">Never Married</span>
+                            </li>
+                             <li class="flex items-center justify-between pt-1">
+                                <span class="text-gray-400"><i class="fas fa-user-tag text-brand-DEFAULT mr-3 w-5 text-center"></i>Pet Name</span>
+                                <span class="text-white font-medium">Mantu</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Hobbies Badges -->
+                    <div class="mt-8">
+                        <h4 class="text-sm font-medium text-gray-400 mb-3 uppercase tracking-wider">Interests & Hobbies</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-4 py-2 bg-slate-800 border border-slate-700 rounded-full text-sm text-gray-300"><i class="fas fa-robot text-brand-DEFAULT mr-2"></i>AI/ML</span>
+                            <span class="px-4 py-2 bg-slate-800 border border-slate-700 rounded-full text-sm text-gray-300"><i class="fas fa-chart-line text-green-500 mr-2"></i>Stock Investment</span>
+                            <span class="px-4 py-2 bg-slate-800 border border-slate-700 rounded-full text-sm text-gray-300"><i class="fas fa-pencil-alt text-blue-400 mr-2"></i>Pencil Drawing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience & Education Section -->
+    <section id="experience" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-heading text-3xl md:text-4xl font-bold mb-4">Education & <span class="text-brand-DEFAULT">Career</span></h2>
+                <div class="w-20 h-1 bg-brand-DEFAULT mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                
+                <!-- Experience Timeline -->
+                <div class="reveal">
+                    <h3 class="text-2xl font-heading font-semibold mb-8 flex items-center text-white">
+                        <i class="fas fa-briefcase text-brand-DEFAULT mr-3"></i> Professional Journey
+                    </h3>
+                    <div class="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-brand-DEFAULT before:to-transparent">
+                        
+                        <!-- Exp Item 1 -->
+                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-slate-900 bg-brand-DEFAULT text-slate-900 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow ml-0 relative z-10">
+                                <i class="fas fa-gas-pump text-xs"></i>
+                            </div>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-800/50 p-6 rounded-xl border border-slate-700 hover:border-brand-DEFAULT/50 transition-colors ml-4 md:ml-0">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h4 class="font-bold text-white text-lg">Associate Executive Engineer</h4>
+                                </div>
+                                <div class="text-brand-light text-sm font-medium mb-1">Bharat Petroleum Corporation Ltd. (BPCL)</div>
+                                <div class="text-gray-500 text-xs mb-3">Uluberia, West Bengal • 2026 - Current</div>
+                                <p class="text-gray-400 text-sm">Emp. No: 24455. Currently working at the BPCL LPG Bottling Plant (Bharatgas).</p>
+                            </div>
+                        </div>
+
+                        <!-- Exp Item 2 -->
+                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-slate-900 bg-slate-700 text-gray-300 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow ml-0 relative z-10">
+                                <i class="fas fa-industry text-xs"></i>
+                            </div>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-800/50 p-6 rounded-xl border border-slate-700 hover:border-brand-DEFAULT/50 transition-colors ml-4 md:ml-0">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h4 class="font-bold text-white text-lg">Manager</h4>
+                                </div>
+                                <div class="text-brand-light text-sm font-medium mb-1">Reliance Industries Limited</div>
+                                <div class="text-gray-500 text-xs mb-3">Kanpur Dehat, Uttar Pradesh • 2024 - 2026</div>
+                                <p class="text-gray-400 text-sm">Emp. No: 10099565. Managed operations at Reliance Depot, Bhawalpur, Akbarpur.</p>
+                            </div>
+                        </div>
+
+                        <!-- Exp Item 3 -->
+                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-slate-900 bg-slate-700 text-gray-300 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow ml-0 relative z-10">
+                                <i class="fas fa-hard-hat text-xs"></i>
+                            </div>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-800/50 p-6 rounded-xl border border-slate-700 hover:border-brand-DEFAULT/50 transition-colors ml-4 md:ml-0">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h4 class="font-bold text-white text-lg">Contract Engineer</h4>
+                                </div>
+                                <div class="text-brand-light text-sm font-medium mb-1">Sinclus</div>
+                                <div class="text-gray-500 text-xs mb-3">Khorda, Odisha • 2022 - 2024</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Education Timeline -->
+                <div class="reveal">
+                    <h3 class="text-2xl font-heading font-semibold mb-8 flex items-center text-white">
+                        <i class="fas fa-graduation-cap text-brand-DEFAULT mr-3"></i> Academic Background
+                    </h3>
+                    <div class="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-brand-DEFAULT before:to-transparent">
+                        
+                        <!-- Ed Item 1 -->
+                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-slate-900 bg-brand-DEFAULT text-slate-900 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow ml-0 relative z-10">
+                                <i class="fas fa-university text-xs"></i>
+                            </div>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-800/50 p-6 rounded-xl border border-slate-700 hover:border-brand-DEFAULT/50 transition-colors ml-4 md:ml-0">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h4 class="font-bold text-white text-lg">B.Tech.</h4>
+                                </div>
+                                <div class="text-brand-light text-sm font-medium mb-1">Darbhanga College of Engineering (Govt.)</div>
+                                <div class="text-gray-500 text-xs mb-3">Darbhanga, Bihar • 2014 - 2018</div>
+                            </div>
+                        </div>
+
+                        <!-- Ed Item 2 -->
+                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-slate-900 bg-slate-700 text-gray-300 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow ml-0 relative z-10">
+                                <i class="fas fa-school text-xs"></i>
+                            </div>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-slate-800/50 p-6 rounded-xl border border-slate-700 hover:border-brand-DEFAULT/50 transition-colors ml-4 md:ml-0">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h4 class="font-bold text-white text-lg">10th / 12th</h4>
+                                </div>
+                                <div class="text-brand-light text-sm font-medium mb-1">Shree Ayyappa Public School</div>
+                                <div class="text-gray-500 text-xs mb-3">Sector 5, Bokaro Steel City • 2012 / 2014</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Family Section (Replaced Projects) -->
+    <section id="family" class="py-20 bg-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-heading text-3xl md:text-4xl font-bold mb-4">Family <span class="text-brand-DEFAULT">Details</span></h2>
+                <div class="w-20 h-1 bg-brand-DEFAULT mx-auto rounded-full mb-6"></div>
+                <p class="text-gray-400 max-w-2xl mx-auto">We belong to a traditional joint family with strong cultural roots, residing in Bokaro Steel City, Jharkhand, originally from Siwan, Bihar.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <!-- Father -->
+                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-700 reveal flex flex-col items-center text-center hover:border-brand-DEFAULT transition-colors">
+                    <div class="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center text-2xl text-brand-DEFAULT mb-4">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-1">Shr. Awadhesh Kumar Rao</h3>
+                    <p class="text-brand-light text-sm mb-4">Father</p>
+                    <p class="text-gray-400 text-sm"><span class="text-gray-300 font-medium">Education:</span> B. Sc.</p>
+                    <p class="text-gray-400 text-sm"><span class="text-gray-300 font-medium">Occupation:</span> Businessman</p>
+                </div>
+
+                <!-- Mother -->
+                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-700 reveal flex flex-col items-center text-center hover:border-brand-DEFAULT transition-colors" style="transition-delay: 100ms;">
+                    <div class="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center text-2xl text-brand-DEFAULT mb-4">
+                        <i class="fas fa-female"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-1">Smt. Meena Rao</h3>
+                    <p class="text-brand-light text-sm mb-4">Mother</p>
+                    <p class="text-gray-400 text-sm"><span class="text-gray-300 font-medium">Education:</span> Intermediate</p>
+                    <p class="text-gray-400 text-sm"><span class="text-gray-300 font-medium">Occupation:</span> Housewife</p>
+                </div>
+
+                <!-- Brother -->
+                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-700 reveal flex flex-col items-center text-center hover:border-brand-DEFAULT transition-colors" style="transition-delay: 200ms;">
+                    <div class="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center text-2xl text-brand-DEFAULT mb-4">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-1">Himanshu Kumar Rao</h3>
+                    <p class="text-brand-light text-sm mb-4">Brother</p>
+                    <p class="text-gray-400 text-sm"><span class="text-gray-300 font-medium">Education:</span> B. Sc. Pharmacy</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 rounded-2xl p-8 border border-slate-700 reveal">
+                <h3 class="text-xl font-heading font-semibold text-white mb-6 border-b border-slate-800 pb-3">Extended Roots & Values</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <p class="text-gray-400 mb-2"><i class="fas fa-praying-hands text-brand-DEFAULT mr-2 w-5"></i> <span class="text-gray-300 font-medium">Grandfather:</span> Late Subash Ram</p>
+                        <p class="text-gray-400 mb-2"><i class="fas fa-praying-hands text-brand-DEFAULT mr-2 w-5"></i> <span class="text-gray-300 font-medium">Grandmother:</span> Late Deomuni Devi</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 mb-2"><i class="fas fa-home text-brand-DEFAULT mr-2 w-5"></i> <span class="text-gray-300 font-medium">Structure:</span> Joint Family</p>
+                        <p class="text-gray-400 mb-2"><i class="fas fa-heart text-brand-DEFAULT mr-2 w-5"></i> <span class="text-gray-300 font-medium">Values:</span> Deeply Traditional</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Expectations Section -->
+    <section id="expectations" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <!-- Requirements -->
+                <div class="flex-1 reveal">
+                    <h2 class="font-heading text-3xl md:text-4xl font-bold mb-4 text-white">Partner <span class="text-brand-DEFAULT">Expectations</span></h2>
+                    <div class="w-20 h-1 bg-brand-DEFAULT mb-8"></div>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+                            <h4 class="text-gray-500 text-xs uppercase mb-1">Age</h4>
+                            <p class="text-white font-medium">22 - 27 Years</p>
+                        </div>
+                        <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+                            <h4 class="text-gray-500 text-xs uppercase mb-1">Height</h4>
+                            <p class="text-white font-medium">5'4" - 5'7"</p>
+                        </div>
+                        <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+                            <h4 class="text-gray-500 text-xs uppercase mb-1">Education</h4>
+                            <p class="text-white font-medium">Graduate</p>
+                        </div>
+                        <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+                            <h4 class="text-gray-500 text-xs uppercase mb-1">Status</h4>
+                            <p class="text-white font-medium">Never Married</p>
+                        </div>
+                        <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+                            <h4 class="text-gray-500 text-xs uppercase mb-1">Background</h4>
+                            <p class="text-white font-medium">Hindu • Chamar</p>
+                        </div>
+                        <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+                            <h4 class="text-gray-500 text-xs uppercase mb-1">Complexion</h4>
+                            <p class="text-white font-medium">Brown or Fair</p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-heading text-white mb-3">Desired Personality</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Modest, Humble, Kind, Respectful, Honest, Trustworthy, Compassionate, Empathetic, Patient, Understanding, Responsible, Accountable, Reliable, Dependable, Friendly, Positive, Optimistic, Fair, Just, Cooperative, Adaptable, Flexible, Confident, Generous, Helpful.
+                    </p>
+                </div>
+
+                <!-- Vision Statement -->
+                <div class="flex-1 reveal bg-gradient-to-br from-brand-DEFAULT/20 to-slate-900 p-8 md:p-12 rounded-3xl border border-brand-DEFAULT/30 relative">
+                    <i class="fas fa-quote-left text-4xl text-brand-DEFAULT/40 absolute top-8 left-8"></i>
+                    <h3 class="text-2xl font-heading font-semibold text-brand-light mb-6 mt-4">My Vision</h3>
+                    <p class="text-gray-300 leading-relaxed text-lg italic relative z-10">
+                        "I am seeking a strictly traditional lifelong marriage where you actively reject modern feminist individualism to proudly manage the household as a dedicated housewife, happily embrace joint-family living with deep respect for my parents & family, and gracefully align your expectations within my financial boundaries. 
+                        <br><br>
+                        In return, I take absolute responsibility as your sole provider and fierce emotional shield, guaranteeing your complete financial security, sovereign domestic authority, and deep respect for your parents & family."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 relative overflow-hidden bg-slate-900 border-t border-slate-800">
+        <!-- Background elements -->
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-brand-DEFAULT/10 rounded-full mix-blend-screen filter blur-3xl opacity-50"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-heading text-3xl md:text-4xl font-bold mb-4">Contact <span class="text-brand-DEFAULT">Information</span></h2>
+                <div class="w-20 h-1 bg-brand-DEFAULT mx-auto rounded-full mb-6"></div>
+                <p class="text-gray-400 max-w-2xl mx-auto">If our profiles align and you share similar traditional family values, we would be delighted to hear from you. Please reach out to us using the details below.</p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-12 bg-slate-800/40 p-8 rounded-3xl border border-slate-700/50 reveal justify-center">
+                
+                <!-- Contact Info -->
+                <div class="w-full max-w-3xl grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Phone & Email -->
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-white mb-6">Direct Contact</h3>
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-brand-DEFAULT border border-slate-700 shrink-0">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-white font-medium mb-1">Primary Phone</h4>
+                                <a href="tel:+917677772186" class="text-gray-400 text-sm hover:text-brand-light transition-colors">+91 7677772186 (Sudhanshu)</a>
+                                <br>
+                                <a href="tel:+919525120951" class="text-gray-400 text-sm hover:text-brand-light transition-colors">+91 9525120951 (Father)</a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-brand-DEFAULT border border-slate-700 shrink-0">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-white font-medium mb-1">Email</h4>
+                                <a href="mailto:raosudhanshu95@gmail.com" class="text-gray-400 text-sm hover:text-brand-light transition-colors">raosudhanshu95@gmail.com</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-brand-DEFAULT border border-slate-700 shrink-0">
+                                <i class="fab fa-instagram text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-white font-medium mb-1">Social</h4>
+                                <a href="https://instagram.com/sudhanshukumar.k.rao" target="_blank" class="text-gray-400 text-sm hover:text-brand-light transition-colors">@sudhanshukumar.k.rao</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Addresses -->
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-white mb-6">Addresses</h3>
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-brand-DEFAULT border border-slate-700 shrink-0">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-white font-medium mb-1">Residential Address</h4>
+                                <p class="text-gray-400 text-sm">Qr. No. 610, Street 21, Sector 9/C, Bokaro Steel City, Jharkhand (827009)</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-brand-DEFAULT border border-slate-700 shrink-0">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-white font-medium mb-1">Permanent Address</h4>
+                                <p class="text-gray-400 text-sm">House No. 6, Village/PO Sonbarsa, Siwan, Bihar (841241)</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-brand-DEFAULT border border-slate-700 shrink-0">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-white font-medium mb-1">Office Address</h4>
+                                <p class="text-gray-400 text-sm">BPCL LPG Bottling Plant (Bharatgas), NH6, Birshibpur, Uluberia, Kolkata, Howrah, West Bengal (711316)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between">
+            <div class="text-gray-500 text-sm mb-4 md:mb-0">
+                &copy; <span id="year"></span> Sudhanshu Kumar Rao. Profile created for Marriage purposes.
+            </div>
+            <div class="flex space-x-6">
+                <a href="https://instagram.com/sudhanshukumar.k.rao" class="text-gray-500 hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <a href="#home" id="backToTop" class="fixed bottom-8 right-8 bg-brand-DEFAULT text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg opacity-0 pointer-events-none transition-all duration-300 transform translate-y-4 hover:bg-brand-dark z-50">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- JavaScript for Interactivity -->
+    <script>
+        // Set Current Year in Footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Navbar Scroll Effect & Back to Top Button
+        const navbar = document.getElementById('navbar');
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+            } else {
+                navbar.classList.remove('shadow-lg');
+            }
+
+            // Back to top logic
+            if (window.scrollY > 500) {
+                backToTop.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+                backToTop.classList.add('opacity-100', 'translate-y-0');
+            } else {
+                backToTop.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+                backToTop.classList.remove('opacity-100', 'translate-y-0');
+            }
+        });
+
+        // Typing Effect
+        const textArray = ["Associate Exec. Engineer at BPCL.", "AI/ML Enthusiast.", "Deeply Traditional.", "Family-Oriented."];
+        const typingDelay = 100;
+        const erasingDelay = 50;
+        const newTextDelay = 2000; 
+        let textArrayIndex = 0;
+        let charIndex = 0;
+        const typedTextSpan = document.getElementById("typewriter");
+
+        function type() {
+            if (charIndex < textArray[textArrayIndex].length) {
+                typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(type, typingDelay);
+            } else {
+                setTimeout(erase, newTextDelay);
+            }
+        }
+
+        function erase() {
+            if (charIndex > 0) {
+                typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
+                charIndex--;
+                setTimeout(erase, erasingDelay);
+            } else {
+                textArrayIndex++;
+                if (textArrayIndex >= textArray.length) textArrayIndex = 0;
+                setTimeout(type, typingDelay + 1100);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            if(textArray.length) setTimeout(type, newTextDelay + 250);
+        });
+
+        // Scroll Reveal Animation via Intersection Observer
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100; // when to trigger
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        // Trigger once on load
+        reveal();
+    </script>
+</body>
+</html>
